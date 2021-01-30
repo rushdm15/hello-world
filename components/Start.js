@@ -1,5 +1,4 @@
 import React from 'react';
-import { StyleSheet, View, Text, TextInput, Button } from 'react-native';
 import { StyleSheet, View, Text, TextInput, Button, TouchableOpacity } from 'react-native';
 
 export default class Start extends React.Component {
@@ -56,7 +55,6 @@ return (
         title="Go to chat room"
         onPress={() => this.props.navigation.navigate('Chat', { name: this.state.name})}
       />
-      <Text>You wrote: {this.state.text}</Text>
     </View>
     );
   };

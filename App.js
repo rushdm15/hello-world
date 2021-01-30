@@ -7,6 +7,7 @@ import { render } from 'react-dom';
 
 const Stack = createStackNavigator();
 
+class App extends Component {
 render() {
   return (
     <NavigationContainer>
@@ -24,4 +25,7 @@ render() {
       </Stack.Navigator>
     </NavigationContainer>
   );
+ }
 }
+
+export default App;

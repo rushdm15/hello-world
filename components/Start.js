@@ -1,16 +1,25 @@
 import React from 'react';
-import { StyleSheet, View, Text, TextInput, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Button, TouchableOpacity, 
+  ImageBackground } from 'react-native';
+
+// Background image explained on https://reactnative.dev/docs/imagebackground
+const image = require("../assets/background-image.png");
+
 // Start component also exported
 export default class Start extends React.Component {
  constructor(props) {
    super(props);
-   this.state = { name: '' };
+   this.state = { 
+     name: '',
+     color: ''
+   };
 }   
      
 render() {
 return (
   // textbox for username with styling
-    <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+    <View style={{ flex:1, justifyContent: 'center', alignItems: 'center' }}>
+      <ImageBackground source={image} style={styles.image}></ImageBackground>
       <TextInput
         style={{height: 40, borderColor: 'gray', borderWidth: 1}}
         onChangeText={(name) => this.setState({name})}
@@ -57,7 +66,8 @@ return (
         {/* button to chat room*/}
       <Button
         title="Go to chat room"
-        onPress={() => this.props.navigation.navigate('Chat', { name: this.state.name})}
+        onPress={() => this.props.navigation.navigate('Chat', { 
+          name: this.state.name, color: this.state.color})}
       />
     </View>
     );
@@ -94,5 +104,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#95a6c1',
     borderRadius: 25,
     left: 20
-  }
+  },
 });
+
+// // styling for image background
+//   container: {
+//     flex: 1,
+//     flexDirection: "column"
+//   },
+//   image: {
+//     flex: 1,
+//     resizeMode: "cover",
+//     justifyContent: "center"
+//   },
+//   text: {
+//     color: "white",
+//     fontSize: 42,
+//     fontWeight: "bold",
+//     textAlign: "center",
+//     backgroundColor: "#000000a0"
+//   }
+// });

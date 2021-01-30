@@ -61,3 +61,36 @@ return (
     );
   };
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    width: 200,
+    margin: 10
+  },
+  box1: {
+    flex: 1,
+    backgroundColor: '#cfcd90',
+    height: 50,
+    borderRadius: 25,
+    right: 25
+  },
+  box2: {
+    flex: 1,
+    backgroundColor: '#cfab90',
+    borderRadius: 25,
+    right: 10
+  },
+  box3: {
+    flex: 1,
+    backgroundColor: '#a59d97',
+    borderRadius: 25,
+    left: 5
+  },
+  box4: {
+    flex: 1,
+    backgroundColor: '#95a6c1',
+    borderRadius: 25,
+    left: 20
+  }
+});

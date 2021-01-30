@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, TextInput, Button, TouchableOpacity } from 'react-native';
-
+// Start component also exported
 export default class Start extends React.Component {
  constructor(props) {
    super(props);
@@ -9,13 +9,15 @@ export default class Start extends React.Component {
      
 render() {
 return (
+  // textbox for username with styling
     <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
       <TextInput
         style={{height: 40, borderColor: 'gray', borderWidth: 1}}
         onChangeText={(name) => this.setState({name})}
         value={this.state.name}
         placeholder='Enter Name'
-      />          
+      />         
+      {/* color options for user to choose explained on https://reactnative.dev/docs/touchableopacity  */}
         <Text>Choose a color for your Chat: </Text>
         <View style={styles.container}>
           <TouchableOpacity
@@ -39,6 +41,7 @@ return (
           >
           </TouchableOpacity>
         </View>
+        {/* responsive color option for color chosen */}
         <View style={{ 
           backgroundColor: this.state.color, 
           borderStyle: 'solid', 
@@ -51,6 +54,7 @@ return (
           borderRadius: 25 }}
         >
         </View>
+        {/* button to chat room*/}
       <Button
         title="Go to chat room"
         onPress={() => this.props.navigation.navigate('Chat', { name: this.state.name})}
@@ -59,7 +63,7 @@ return (
     );
   };
 }
-
+// styles for color options, circle shapes
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',

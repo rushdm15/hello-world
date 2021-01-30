@@ -18,10 +18,11 @@ export default class Start extends React.Component {
 render() {
 return (
   // textbox for username with styling
+  <ImageBackground source={image} style={styles.image}>
     <View style={{ flex:1, justifyContent: 'center', alignItems: 'center' }}>
-      <ImageBackground source={image} style={styles.image}></ImageBackground>
       <TextInput
-        style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+        style={{height: 40, borderColor: 'gray', borderWidth: 1, backgroundColor: 'white'
+      }}
         onChangeText={(name) => this.setState({name})}
         value={this.state.name}
         placeholder='Enter Name'
@@ -69,7 +70,8 @@ return (
         onPress={() => this.props.navigation.navigate('Chat', { 
           name: this.state.name, color: this.state.color})}
       />
-    </View>
+        </View>
+    </ImageBackground>
     );
   };
 }
@@ -78,7 +80,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     width: 200,
-    margin: 10
+    margin: 10,
   },
   box1: {
     flex: 1,
@@ -105,6 +107,11 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     left: 20
   },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center"
+  }
 });
 
 // // styling for image background

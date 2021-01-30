@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Button, StyleSheet, ImageBackground } from 'react-native';
+
+const image = require("../assets/background-image.png");
 
 export default class Chat extends React.Component {
 
@@ -10,8 +12,12 @@ export default class Chat extends React.Component {
     this.props.navigation.setOptions({ title: name });
 
     return (
-      <View>
-        {/* Rest of the UI */}
+      <View style={{flex:1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'color' }}>
+        <ImageBackground source={image} style={styles.image}></ImageBackground>
+      <Button
+        title="Go to Start"
+        onPress={() => this.props.navigation.navigate('Start')}
+      />      
       </View>
     );
   };

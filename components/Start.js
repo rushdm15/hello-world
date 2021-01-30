@@ -21,14 +21,14 @@ return (
   <ImageBackground source={image} style={styles.image}>
     <View style={{ flex:1, justifyContent: 'center', alignItems: 'center' }}>
       <TextInput
-        style={{height: 40, borderColor: 'gray', borderWidth: 1, backgroundColor: 'white'
-      }}
+        style={{height: 40, borderColor: 'gray', borderWidth: 1, backgroundColor: 'white',
+        fontSize: 20,}}
         onChangeText={(name) => this.setState({name})}
         value={this.state.name}
         placeholder='Enter Name'
       />         
       {/* color options for user to choose explained on https://reactnative.dev/docs/touchableopacity  */}
-        <Text>Choose a color for your Chat: </Text>
+        <Text style={styles.appTitle}>Choose a color for your Chat: </Text>
         <View style={styles.container}>
           <TouchableOpacity
             style={styles.box1}
@@ -50,8 +50,8 @@ return (
             onPress={() => {this.setState({color: '#95a6c1'})}}
           >
           </TouchableOpacity>
-        </View>
         {/* responsive color option for color chosen */}
+        </View>
         <View style={{ 
           backgroundColor: this.state.color, 
           borderStyle: 'solid', 
@@ -70,12 +70,12 @@ return (
         onPress={() => this.props.navigation.navigate('Chat', { 
           name: this.state.name, color: this.state.color})}
       />
-        </View>
-    </ImageBackground>
+    </View>
+  </ImageBackground>
     );
   };
 }
-// styles for color options, circle shapes
+// styles for color options, circle shapes, text, and background image 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
@@ -111,7 +111,16 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: "cover",
     justifyContent: "center"
-  }
+  },
+  appTitle: {
+    top: 30,
+    height: '50%',
+    fontSize: 25,
+    fontWeight: 600,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#FFFFFF',
+  },
 });
 
 // // styling for image background

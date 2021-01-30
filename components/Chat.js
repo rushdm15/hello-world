@@ -12,7 +12,7 @@ export default class Chat extends React.Component {
     this.props.navigation.setOptions({ title: name });
 
     return (
-      <View style={{flex:1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'color' }}>
+      <View style={{flex:1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'this.state.color' }}>
         <ImageBackground source={image} style={styles.image}></ImageBackground>
       <Button
         title="Go to Start"

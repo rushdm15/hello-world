@@ -5,7 +5,7 @@ import { StyleSheet, View, Text, TextInput, Button, TouchableOpacity } from 'rea
 export default class Start extends React.Component {
  constructor(props) {
    super(props);
-   this.state = { text: '' };
+   this.state = { name: '' };
 }   
      
 render() {
@@ -13,8 +13,8 @@ return (
     <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
       <TextInput
         style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-        onChangeText={(text) => this.setState({text})}
-        value={this.state.text}
+        onChangeText={(name) => this.setState({name})}
+        value={this.state.name}
         placeholder='Enter Name'
       />          
         <Text>Choose a color for your Chat: </Text>
@@ -54,7 +54,7 @@ return (
         </View>
       <Button
         title="Go to chat room"
-        onPress={() => this.props.navigation.navigate('Chat')}
+        onPress={() => this.props.navigation.navigate('Chat', { name: this.state.name})}
       />
       <Text>You wrote: {this.state.text}</Text>
     </View>

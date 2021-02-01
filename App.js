@@ -14,7 +14,7 @@ render() {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="Start"
-      >
+        >
         <Stack.Screen
           name="Start"
           component={Start}

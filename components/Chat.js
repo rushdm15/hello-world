@@ -16,7 +16,7 @@ export default class Chat extends React.Component {
       messages: GiftedChat.append(previousState.messages, messages),
     }))
   }
-
+// color of text bubble
   renderBubble(props) {
     return (
       <Bubble
@@ -45,7 +45,9 @@ export default class Chat extends React.Component {
         title="Go to Start"
         onPress={() => this.props.navigation.navigate('Start')}
       />     
+      {/* android keyboard error */}
       { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }
+      {/* provides the entire interface, text input field, speech bubbles, “Send” button, */}
       <GiftedChat
         renderBubble={this.renderBubble.bind(this)}
         messages={this.state.messages}

@@ -41,10 +41,10 @@ export default class Chat extends React.Component {
     return (
       <View style={{flex:1, backgroundColor: color }}>
           {/* Back button */}
-        <Button
+        {/* <Button
           title="Go to Start"
           onPress={() => this.props.navigation.navigate('Start')}
-        />     
+        />      */}
         {/* provides the entire interface, text input field, speech bubbles, “Send” button, */}
         <GiftedChat
           renderBubble={this.renderBubble.bind(this)}

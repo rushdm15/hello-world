@@ -39,23 +39,23 @@ export default class Chat extends React.Component {
 
     // Styling and background color chosen, uses flexbox
     return (
-      <View style={{flex:1, justifyContent: 'center', alignItems: 'center', backgroundColor: color }}>
-        {/* Back button */}
-      <Button
-        title="Go to Start"
-        onPress={() => this.props.navigation.navigate('Start')}
-      />     
-      {/* android keyboard error */}
-      { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }
-      {/* provides the entire interface, text input field, speech bubbles, “Send” button, */}
-      <GiftedChat
-        renderBubble={this.renderBubble.bind(this)}
-        messages={this.state.messages}
-        onSend={messages => this.onSend(messages)}
-        user={{
-          _id: 1,
-        }}
-      /> 
+      <View style={{flex:1, backgroundColor: color }}>
+          {/* Back button */}
+        <Button
+          title="Go to Start"
+          onPress={() => this.props.navigation.navigate('Start')}
+        />     
+        {/* provides the entire interface, text input field, speech bubbles, “Send” button, */}
+        <GiftedChat
+          renderBubble={this.renderBubble.bind(this)}
+          messages={this.state.messages}
+          onSend={messages => this.onSend(messages)}
+          user={{
+            _id: 1,
+          }}
+        /> 
+        {/* android keyboard error */}
+        { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }
       </View>
     );
   }

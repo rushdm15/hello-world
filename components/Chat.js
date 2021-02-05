@@ -1,6 +1,11 @@
 import React from 'react';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 import { View, Text, Button, Platform, KeyboardAvoidingView } from 'react-native';
+import firebase from 'firebase';
+import firestore from 'firebase';
+
+const firebase = require('firebase');
+require('firebase/firestore');
 
 // Chat component also exported
 export default class Chat extends React.Component {
@@ -8,7 +13,43 @@ export default class Chat extends React.Component {
     super();
     this.state = {
       messages: [],
+      uid: 0,
     };
+
+  if (!firebase.apps.length){
+    firebase.initializeApp({
+        apiKey: "AIzaSyDYEnlD4_FhhQhI9wPwgN6Xf2rdYlELf74",
+        authDomain: "shopping-725a2.firebaseapp.com",
+        projectId: "shopping-725a2",
+        storageBucket: "shopping-725a2.appspot.com",
+        messagingSenderId: "393972749114",
+        });
+    }
+  }
+    
+
+  onCollectionUpdate = (querySnapshot) => {
+    const messages = [];
+    // go through each document
+    querySnapshot.forEach((doc) => {
+      // get the QueryDocumentSnapshot's data
+      let data = doc.data();
+      messages.push({
+        _id: data._id,
+        text: data.text,
+        createdAt: data.createdAt.toDate(),
+        user: data.user,
+      });
+    });
+  }
+
+  // add a new list to the collection
+  addList() {
+    this.referenceChatMessages.add({
+      name: 'TestList',
+      items: ['eggs', 'pasta', 'veggies'],
+      uid: this.state.uid, 
+    });
   }
 
   onSend(messages = []) {
@@ -54,14 +95,35 @@ export default class Chat extends React.Component {
             _id: 1,
           }}
         /> 
+
         {/* android keyboard error */}
         { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }
+        
+        <FlatList
+          data={this.state.lists}
+          renderItem={({ item }) =>
+          <Text>{item.name}: {item.items}</Text>}
+        />
+
+        <button
+          onPress={() => {
+            this.addList();
+          }}
+          title = "Add something"
+        />
       </View>
     );
   }
 
   componentDidMount() {
+    // create a reference to the active user's documents (shopping lists)
+    this.referenceChatMessages = firebase.firestore().collection("messages");
+    this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        firebase.auth().signInAnonymously();
+      }
     this.setState({
+      uid: user.uid,
       messages: [
         {
           _id: 1,
@@ -80,8 +142,32 @@ export default class Chat extends React.Component {
           system: true,
          },
       ],
-    })
+    }); 
+      // create a reference to the active user's documents (shopping lists)
+      this.referenceChatMessagesUser = firebase.firestore().collection('shoppinglists').where("uid", "==", this.state.uid);
+      // listen for collection changes for current user 
+      this.unsubscribe = this.referenceChatMessages
+        .orderBy("createdAt", "desc")
+        .onSnapshot(this.onCollectionUpdate);
+    });
   }
-}    
 
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+}  
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingTop: 40,     
+  },
+  item: {
+    fontSize: 20,
+    color: 'blue',
+  },
+  text: {
+    fontSize: 30,
+  }
+});

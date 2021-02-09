@@ -1,6 +1,8 @@
 import React from 'react';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 import { View,Text, Button, Platform, KeyboardAvoidingView } from 'react-native';
+// import * as firebase from "firebase" 
+// import "@firebase/firestore"
 
 // Google Firebase
 const firebase = require('firebase');
@@ -44,7 +46,7 @@ export default class Chat extends React.Component {
   }
 
   // add a new list to the collection
-  addList() {
+  addMessages() {
     this.referenceChatMessages.add({
       name: 'TestList',
       items: ['eggs', 'pasta', 'veggies'],
@@ -118,29 +120,13 @@ export default class Chat extends React.Component {
       }
     this.setState({
       uid: user.uid,
-      messages: [
-        {
-          _id: 1,
-          text: 'Hello developer',
-          createdAt: new Date(),
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://placeimg.com/140/140/any',
-          },
-        },
-        {
-          _id: 2,
-          text: 'This is a system message',
-          createdAt: new Date(),
-          system: true,
-         },
-      ],
+      messages: [],
     }); 
       // create a reference to the active user's documents (shopping lists)
-      this.referenceChatMessagesUser = firebase.firestore().collection('shoppinglists').where("uid", "==", this.state.uid);
+      // this.referenceChatMessagesUser = firebase.firestore().collection('messages');
+      // .where("uid", "==", this.state.uid);
       // listen for collection changes for current user 
-      this.unsubscribe = this.referenceChatMessages
+      this.unsubscribeChatUser = this.referenceChatMessages
         .orderBy("createdAt", "desc")
         .onSnapshot(this.onCollectionUpdate);
     });

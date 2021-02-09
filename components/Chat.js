@@ -1,6 +1,6 @@
 import React from 'react';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
-import { View,Text, Button, Platform, KeyboardAvoidingView } from 'react-native';
+import { View, Button, Platform, KeyboardAvoidingView } from 'react-native';
 // import * as firebase from "firebase" 
 // import "@firebase/firestore"
 
@@ -48,16 +48,21 @@ export default class Chat extends React.Component {
   // add a new list to the collection
   addMessages() {
     this.referenceChatMessages.add({
-      name: 'TestList',
-      items: ['eggs', 'pasta', 'veggies'],
-      uid: this.state.uid, 
+      _id: message._id,
+      createdAt: message.createdAt,
+      text: message.text,
+      user: message.user,
+      image: message.image || null,
+      location: message.location || null,
     });
   }
 
   onSend(messages = []) {
     this.setState(previousState => ({
       messages: GiftedChat.append(previousState.messages, messages),
-    }))
+    })
+    
+    )
   }
 // color of text bubble
   renderBubble(props) {
@@ -101,12 +106,6 @@ export default class Chat extends React.Component {
         {/* android keyboard error */}
         { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }
 
-        <button
-          onPress={() => {
-            this.addList();
-          }}
-          title = "Add something"
-        />
       </View>
     );
   }
@@ -123,7 +122,7 @@ export default class Chat extends React.Component {
       messages: [],
     }); 
       // create a reference to the active user's documents (shopping lists)
-      // this.referenceChatMessagesUser = firebase.firestore().collection('messages');
+      // this.referenceChatMessages = firebase.firestore().collection('messages');
       // .where("uid", "==", this.state.uid);
       // listen for collection changes for current user 
       this.unsubscribeChatUser = this.referenceChatMessages
@@ -133,7 +132,10 @@ export default class Chat extends React.Component {
   }
 
   componentWillUnmount() {
-    this.unsubscribe();
+    // Stop receiving updates from collection
+    this.authUnsubscribe();
+    // Stop listening to authentication
+    this.unsubscribeChatUser();
   }
 }  
 

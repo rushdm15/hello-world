@@ -1,6 +1,6 @@
 import React from 'react';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
-import { View, Text, Button, Platform, KeyboardAvoidingView } from 'react-native';
+import { View,Text, Button, Platform, KeyboardAvoidingView } from 'react-native';
 
 // Google Firebase
 const firebase = require('firebase');
@@ -15,14 +15,16 @@ export default class Chat extends React.Component {
       uid: 0,
     };
 
+    const firebaseConfig = {
+      apiKey: "AIzaSyDYEnlD4_FhhQhI9wPwgN6Xf2rdYlELf74",
+      authDomain: "shopping-725a2.firebaseapp.com",
+      projectId: "shopping-725a2",
+      storageBucket: "shopping-725a2.appspot.com",
+      messagingSenderId: "393972749114",
+      }
+
   if (!firebase.apps.length){
-    firebase.initializeApp({
-        apiKey: "AIzaSyDYEnlD4_FhhQhI9wPwgN6Xf2rdYlELf74",
-        authDomain: "shopping-725a2.firebaseapp.com",
-        projectId: "shopping-725a2",
-        storageBucket: "shopping-725a2.appspot.com",
-        messagingSenderId: "393972749114",
-        });
+    firebase.initializeApp(firebaseConfig);
     }
   }
   

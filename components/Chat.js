@@ -26,8 +26,8 @@ export default class Chat extends React.Component {
   if (!firebase.apps.length){
     firebase.initializeApp(firebaseConfig);
     }
-  }
-  
+  } 
+
   onCollectionUpdate = (querySnapshot) => {
     const messages = [];
     // go through each document
@@ -150,5 +150,4 @@ export default class Chat extends React.Component {
     this.unsubscribe();
   }
 }  
-
 

@@ -46,7 +46,7 @@ export default class Chat extends React.Component {
   }
 
   // add a new list to the collection
-  addMessages() {
+  addMessage() {
     this.referenceChatMessages.add({
       _id: message._id,
       createdAt: message.createdAt,
@@ -111,7 +111,7 @@ export default class Chat extends React.Component {
   }
 
   componentDidMount() {
-    // create a reference to the active user's documents (shopping lists)
+    // create a reference to the active user's documents (messages)
     this.referenceChatMessages = firebase.firestore().collection("messages");
     this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
       if (!user) {

@@ -25,8 +25,7 @@ export default class Chat extends React.Component {
         });
     }
   }
-    
-
+  
   onCollectionUpdate = (querySnapshot) => {
     const messages = [];
     // go through each document
@@ -97,12 +96,6 @@ export default class Chat extends React.Component {
 
         {/* android keyboard error */}
         { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }
-        
-        <FlatList
-          data={this.state.lists}
-          renderItem={({ item }) =>
-          <Text>{item.name}: {item.items}</Text>}
-        />
 
         <button
           onPress={() => {
@@ -156,17 +149,4 @@ export default class Chat extends React.Component {
   }
 }  
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingTop: 40,     
-  },
-  item: {
-    fontSize: 20,
-    color: 'blue',
-  },
-  text: {
-    fontSize: 30,
-  }
-});
+

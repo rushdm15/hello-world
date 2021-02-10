@@ -176,6 +176,13 @@ renderInputToolbar(props) {
         .orderBy("createdAt", "desc")
         .onSnapshot(this.onCollectionUpdate);
     });
+    NetInfo.fetch().then(connection => {
+      if (connection.isConnected) {
+        console.log('online');
+      } else {
+        console.log('offline');
+      }
+    });
   }
 
   componentWillUnmount() {

@@ -63,9 +63,44 @@ export default class Chat extends React.Component {
   onSend(messages = []) {
     this.setState(previousState => ({
       messages: GiftedChat.append(previousState.messages, messages),
+    }), () => {
+      this.saveMessages();
+    });
+  }
+
+  async getMessages() {
+    let messages = '';
+    try {
+      messages = await AsyncStorage.getItem('messages') || [];
+      this.setState({
+        messages: JSON.parse(messages)
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+async saveMessages() {
+  try {
+    await AsyncStorage.setItem('messages', JSON.stringify(this.state.messages));
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+async deleteMessages() {
+  try {
+    await AsyncStorage.removeItem('messages');
+    this.setState({
+      messages: []
     })
     
     )
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
   }
 // color of text bubble
   renderBubble(props) {
@@ -114,6 +149,7 @@ export default class Chat extends React.Component {
   }
 
   componentDidMount() {
+    this.getMessages();
     // create a reference to the active user's documents (messages)
     this.referenceChatMessages = firebase.firestore().collection("messages");
     this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {

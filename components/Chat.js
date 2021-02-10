@@ -94,8 +94,6 @@ async deleteMessages() {
     this.setState({
       messages: []
     })
-    
-    )
   } catch (error) {
     console.log(error.message);
   }
@@ -110,6 +108,8 @@ renderInputToolbar(props) {
       />
     );
   }
+}
+
 // color of text bubble
   renderBubble(props) {
     return (

@@ -2,6 +2,8 @@ import React from 'react';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 import { View, Button, Platform, KeyboardAvoidingView } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import NetInfo from '@react-native-community/netinfo';
+
 // import * as firebase from "firebase" 
 // import "@firebase/firestore"
 

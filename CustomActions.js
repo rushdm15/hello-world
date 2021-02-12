@@ -1,6 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
+import * as Permissions from 'expo-permissions';
+import * as ImagePicker from 'expo-image-picker';
+import { render } from 'react-dom';
+import * as Location from 'expo-location';
+import MapView from 'react-native-maps';
 
 export default class CustomActions extends React.Component {
 

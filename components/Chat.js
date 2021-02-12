@@ -144,6 +144,7 @@ renderInputToolbar(props) {
           renderBubble={this.renderBubble.bind(this)}
           messages={this.state.messages}
           onSend={messages => this.onSend(messages)}
+          renderActions={this.renderCustomActions}
           user={{
             _id: 1,
           }}

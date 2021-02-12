@@ -3,12 +3,14 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
-import { render } from 'react-dom';
+// import { render } from 'react-dom';
 import * as Location from 'expo-location';
-import MapView from 'react-native-maps';
 
 export default class CustomActions extends React.Component {
-
+  state = {
+    image: null,
+  }
+  
   //Pick an image from the library
   pickImage = async () => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -57,48 +59,6 @@ export default class CustomActions extends React.Component {
     }
   }
 
-  render() {
-    return (
-      <View style={{flex: 1, justifyContent: 'center'}}>
-      {/* <Text>Open up App.js to start working on your app!</Text> */}
-        <StatusBar style="auto" />
-          <Button
-            title="Pick an image from the library"
-            onPress={this.pickImage}
-          />
-
-          <Button
-            title="Take a photo"
-            onPress={this.takePhoto}
-          />
-
-        {this.state.image &&
-          <Image source={{ uri: this.state.image.uri }} style={{ width: 200, height: 200 }} />}
-
-        <Button
-          title="Get my location"
-          onPress={this.getLocation}
-        />
-
-        {this.state.location &&
-          <MapView
-            style={{width: 300, height: 200}}
-            region={{
-              latitude: this.state.location.coords.latitude,
-              longitude: this.state.location.coords.longitude,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-          />}
-      <TouchableOpacity style={[styles.container]} onPress={this.onActionPress}>
-        <View style={[styles.wrapper, this.props.wrapperStyle]}>
-          <Text style={[styles.iconText, this.props.iconTextStyle]}>+</Text>
-        </View>
-      </TouchableOpacity>
-      </View>
-    );
-  }
-
   onActionPress = () => {
     const options = [
       'Choose From Library', 
@@ -128,32 +88,11 @@ export default class CustomActions extends React.Component {
     );
   };
 
-  renderCustomView (props) {
-    const { currentMessage} = props;
-    if (currentMessage.location) {
-      return (
-          <MapView
-            style={{width: 150,
-              height: 100,
-              borderRadius: 13,
-              margin: 3}}
-            region={{
-              latitude: currentMessage.location.latitude,
-              longitude: currentMessage.location.longitude,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-          />
-      );
-    }
-    return null;
-  }
-
-    /**
-   * Upload images to firebase
-   * @function uploadImageFetch
-   * @async
-   */
+  //   /**
+  //  * Upload images to firebase
+  //  * @function uploadImageFetch
+  //  * @async
+  //  */
   uploadImageFetch = async (uri) => {
     const blob = await new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
@@ -179,6 +118,22 @@ export default class CustomActions extends React.Component {
 
     return await snapshot.ref.getDownloadURL();
   };
+
+  render() {
+    return (
+      <TouchableOpacity
+        accessible={true}
+        accessibilityLabel="More options"
+        accessibilityHint="Let’s you choose to send an image or your geolocation."
+        style={[styles.container]}
+        onPress={this.onActionPress}
+      >
+        <View style={[styles.wrapper, this.props.wrapperStyle]}>
+          <Text style={[styles.iconText, this.props.iconTextStyle]}>+</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
 }  
 
 CustomActions.contextTypes = {

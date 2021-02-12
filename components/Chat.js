@@ -1,8 +1,10 @@
 import React from 'react';
 import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat';
-import { View, Button, Platform, KeyboardAvoidingView } from 'react-native';
+import { View, Platform, KeyboardAvoidingView } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import NetInfo from '@react-native-community/netinfo';
+import CustomActions from './CustomActions';
+import MapView from 'react-native-maps';
 
 // import * as firebase from "firebase" 
 // import "@firebase/firestore"
@@ -123,6 +125,27 @@ renderInputToolbar(props) {
       />
     )
   }
+
+  renderCustomView (props) {
+    const { currentMessage} = props;
+    if (currentMessage.location) {
+      return (
+          <MapView
+            style={{width: 150,
+              height: 100,
+              borderRadius: 13,
+              margin: 3}}
+            region={{
+              latitude: currentMessage.location.latitude,
+              longitude: currentMessage.location.longitude,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+          />
+      );
+    }
+    return null;
+  }
   
 // Shows username in navigator, along with color chosen
   render() {
@@ -134,22 +157,17 @@ renderInputToolbar(props) {
     // Styling and background color chosen, uses flexbox
     return (
       <View style={{flex:1, backgroundColor: color }}>
-          {/* Back button */}
-        {/* <Button
-          title="Go to Start"
-          onPress={() => this.props.navigation.navigate('Start')}
-        />      */}
-        {/* provides the entire interface, text input field, speech bubbles, “Send” button, */}
         <GiftedChat
           renderBubble={this.renderBubble.bind(this)}
+          // renderInputToolbar={this.renderInputToolbar}
           messages={this.state.messages}
           onSend={messages => this.onSend(messages)}
-          renderActions={this.renderCustomView}
+          renderActions={this.renderActions}
+          renderCustomView={this.renderCustomView}
           user={{
             _id: 1,
           }}
         /> 
-
         {/* android keyboard error */}
         { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }
 
@@ -192,5 +210,9 @@ renderInputToolbar(props) {
     // Stop listening to authentication
     this.unsubscribeChatUser();
   }
+
+  renderCustomActions = (props) => {
+    return <CustomActions {...props} />;
+  };
 }  
 

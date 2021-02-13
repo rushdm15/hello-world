@@ -84,19 +84,32 @@ export default class Chat extends React.Component {
       if (!user) {
         firebase.auth().signInAnonymously();
       }
-    this.setState({
-      uid: user.uid,
+      else {
+        this.setState({
+        isConnected: true,
+        user: {
+          _id: user.uid,
+          name: this.props.route.params.name,
+          avatar: 'https://placeimg.com/140/140/any' 
+        },
       messages: [],
-    }); 
+      }); 
       // listen for collection changes for current user 
       this.unsubscribe = this.referenceChatMessages
         .orderBy("createdAt", "desc")
         .onSnapshot(this.onCollectionUpdate);
+      }
     });
   } else {
     console.log('offline');
-      }
+    this.getMessages();
+    this.setState({
+      isConnected: false,
+      });
+     }
     });
+    // calling the onSnapshot function to receive the updated data
+    this.referenceChatMessages = firebase.firestore().collection('messages');
   }
 
   componentWillUnmount() {

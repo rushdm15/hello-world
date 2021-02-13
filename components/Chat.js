@@ -3,15 +3,14 @@ import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat';
 import { View, Platform, KeyboardAvoidingView } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import NetInfo from '@react-native-community/netinfo';
-import CustomActions from './CustomActions';
+import firebase from 'firebase';
+import 'firebase/firestore';
 import MapView from 'react-native-maps';
-
-// import * as firebase from "firebase" 
-// import "@firebase/firestore"
+import CustomActions from './CustomActions';
 
 // Google Firebase
-const firebase = require('firebase');
-require('firebase/firestore');
+// const firebase = require('firebase');
+// require('firebase/firestore');
 
 // Chat component also exported
 export default class Chat extends React.Component {

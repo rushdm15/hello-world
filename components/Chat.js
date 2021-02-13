@@ -1,10 +1,10 @@
 import React from 'react';
 import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat';
 import { View, Platform, KeyboardAvoidingView } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
-import NetInfo from '@react-native-community/netinfo';
 import firebase from 'firebase';
 import 'firebase/firestore';
+import AsyncStorage from '@react-native-community/async-storage';
+import NetInfo from '@react-native-community/netinfo';
 import MapView from 'react-native-maps';
 import CustomActions from './CustomActions';
 
@@ -103,6 +103,10 @@ export default class Chat extends React.Component {
     }
   }
 
+/**
+ * hides inputbar when offline
+ * @function renderInputToolbar
+ */  
 renderInputToolbar(props) {
   if (this.state.isConnected == false) {
   } else {
@@ -128,6 +132,15 @@ renderInputToolbar(props) {
     )
   }
 
+  /**
+   * displays the communication features
+   * @function renderCustomActions
+   */
+  renderCustomActions = (props) => {
+    return <CustomActions {...props} />;
+  };
+
+  // custom map view
   renderCustomView (props) {
     const { currentMessage} = props;
     if (currentMessage.location) {
@@ -212,9 +225,5 @@ renderInputToolbar(props) {
     // Stop listening to authentication
     this.unsubscribeChatUser();
   }
-
-  renderCustomActions = (props) => {
-    return <CustomActions {...props} />;
-  };
 }  
 

@@ -25,10 +25,13 @@ export default class Chat extends React.Component {
     const firebaseConfig = {
       apiKey: "AIzaSyCEyxlPyi8EcmYhmv-N1XCX7OFlMzSH1dM",
       authDomain: "chat-app-19f48.firebaseapp.com",
+      databaseURL: "https://chat-app-19f48-default-rtdb.firebaseio.com",
       projectId: "chat-app-19f48",
       storageBucket: "chat-app-19f48.appspot.com",
       messagingSenderId: "982800756346",
-      }
+      appId: "1:982800756346:web:b5ecea4623e9f780c795c3",
+      measurementId: "G-8MSPLCJWVG"
+    };
 
   if (!firebase.apps.length){
     firebase.initializeApp(firebaseConfig);

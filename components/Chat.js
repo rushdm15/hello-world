@@ -37,42 +37,12 @@ export default class Chat extends React.Component {
   if (!firebase.apps.length){
     firebase.initializeApp(firebaseConfig);
     }
+
+    // create a reference to the active user's documents (shopping lists)
+    this.referenceChatMessages = firebase.firestore().collection('messages');
+    // .where("uid", "==", this.state.uid);
+
   } 
-
-  onCollectionUpdate = (querySnapshot) => {
-    const messages = [];
-    // go through each document
-    querySnapshot.forEach((doc) => {
-      // get the QueryDocumentSnapshot's data
-      let data = doc.data();
-      messages.push({
-        _id: data._id,
-        text: data.text,
-        createdAt: data.createdAt.toDate(),
-        user: data.user,
-      });
-    });
-  }
-
-  // add a new list to the collection
-  addMessage() {
-    this.referenceChatMessages.add({
-      _id: message._id,
-      createdAt: message.createdAt,
-      text: message.text,
-      user: message.user,
-      image: message.image || null,
-      location: message.location || null,
-    });
-  }
-
-  onSend(messages = []) {
-    this.setState(previousState => ({
-      messages: GiftedChat.append(previousState.messages, messages),
-    }), () => {
-      this.saveMessages();
-    });
-  }
 
   async getMessages() {
     let messages = '';
@@ -105,20 +75,75 @@ export default class Chat extends React.Component {
     }
   }
 
-/**
- * hides inputbar when offline
- * @function renderInputToolbar
- */  
-renderInputToolbar(props) {
-  if (this.state.isConnected == false) {
+  componentDidMount() {
+    NetInfo.fetch().then(connection => {
+      if (connection.isConnected) {
+        console.log('online');
+    // create a reference to the active user's documents (messages)
+    this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        firebase.auth().signInAnonymously();
+      }
+    this.setState({
+      uid: user.uid,
+      messages: [],
+    }); 
+      // listen for collection changes for current user 
+      this.unsubscribe = this.referenceChatMessages
+        .orderBy("createdAt", "desc")
+        .onSnapshot(this.onCollectionUpdate);
+    });
   } else {
-    return(
-      <InputToolbar
-      {...props}
-      />
-    );
+    console.log('offline');
+      }
+    });
   }
-}
+
+  componentWillUnmount() {
+    // Stop listening to authentication
+    this.unsubscribe();
+    // Stop receiving updates from collection
+    this.authUnsubscribe();
+  }
+
+  onSend(messages = []) {
+    // setState is called with previousState as the parameter -> reference to the component's
+    // state at the time the change is applied.
+    this.setState(previousState => ({
+      // the append function by Gifted chat appends the new message to the message obj.
+      messages: GiftedChat.append(previousState.messages, messages),
+    }), () => {
+      this.addMessages();
+      this.saveMessages();
+    });
+  }
+
+  onCollectionUpdate = (querySnapshot) => {
+    const messages = [];
+    // go through each document
+    querySnapshot.forEach((doc) => {
+      // get the QueryDocumentSnapshot's data
+      let data = doc.data();
+      messages.push({
+        _id: data._id,
+        text: data.text,
+        createdAt: data.createdAt.toDate(),
+        user: data.user,
+      });
+    });
+  }
+
+  // add a new list to the collection
+  addMessage() {
+    this.referenceChatMessages.add({
+      _id: message._id,
+      createdAt: message.createdAt,
+      text: message.text,
+      user: message.user,
+      image: message.image || null,
+      location: message.location || null,
+    });
+  }
 
 // color of text bubble
   renderBubble(props) {
@@ -133,6 +158,21 @@ renderInputToolbar(props) {
       />
     )
   }
+
+  /**
+ * hides inputbar when offline
+ * @function renderInputToolbar
+ */  
+renderInputToolbar(props) {
+  if (this.state.isConnected == false) {
+  } else {
+    return(
+      <InputToolbar
+      {...props}
+      />
+    );
+  }
+}
 
   /**
    * displays the communication features
@@ -190,42 +230,6 @@ renderInputToolbar(props) {
 
       </View>
     );
-  }
-
-  componentDidMount() {
-    this.getMessages();
-    // create a reference to the active user's documents (messages)
-    this.referenceChatMessages = firebase.firestore().collection("messages");
-    this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
-      if (!user) {
-        firebase.auth().signInAnonymously();
-      }
-    this.setState({
-      uid: user.uid,
-      messages: [],
-    }); 
-      // create a reference to the active user's documents (shopping lists)
-      // this.referenceChatMessages = firebase.firestore().collection('messages');
-      // .where("uid", "==", this.state.uid);
-      // listen for collection changes for current user 
-      this.unsubscribeChatUser = this.referenceChatMessages
-        .orderBy("createdAt", "desc")
-        .onSnapshot(this.onCollectionUpdate);
-    });
-    NetInfo.fetch().then(connection => {
-      if (connection.isConnected) {
-        console.log('online');
-      } else {
-        console.log('offline');
-      }
-    });
-  }
-
-  componentWillUnmount() {
-    // Stop receiving updates from collection
-    this.authUnsubscribe();
-    // Stop listening to authentication
-    this.unsubscribeChatUser();
   }
 }  
 

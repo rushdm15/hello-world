@@ -147,7 +147,8 @@ export default class Chat extends React.Component {
   }
 
   // add a new list to the collection
-  addMessage() {
+  addMessages = () => {
+    const message = this.state.messages[0];
     this.referenceChatMessages.add({
       _id: message._id,
       createdAt: message.createdAt,
@@ -232,7 +233,7 @@ renderInputToolbar(props) {
           // renderInputToolbar={this.renderInputToolbar}
           messages={this.state.messages}
           onSend={messages => this.onSend(messages)}
-          renderActions={this.renderActions}
+          renderActions={this.renderCustomActions}
           renderCustomView={this.renderCustomView}
           user={{
             _id: 1,

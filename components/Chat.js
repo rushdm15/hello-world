@@ -154,7 +154,7 @@ export default class Chat extends React.Component {
           name: data.user.name,
           avatar: data.user.avatar,
         },
-        image: data.image || '',
+        image: data.image || null,
         location: data.location || null,
       });
     });
@@ -241,7 +241,7 @@ renderInputToolbar(props) {
         <GiftedChat
           renderBubble={this.renderBubble.bind(this)}
           renderInputToolbar={this.renderInputToolbar.bind(this)}
-          messages={messages}
+          messages={this.state.messages}
           onSend={messages => this.onSend(messages)}
           renderActions={this.renderCustomActions}
           renderCustomView={this.renderCustomView}

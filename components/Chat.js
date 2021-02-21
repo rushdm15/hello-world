@@ -230,8 +230,8 @@ renderInputToolbar(props) {
       <View style={{flex:1, backgroundColor: color }}>
         <GiftedChat
           renderBubble={this.renderBubble.bind(this)}
-          // renderInputToolbar={this.renderInputToolbar}
-          messages={this.state.messages}
+          renderInputToolbar={this.renderInputToolbar.bind(this)}
+          messages={messages}
           onSend={messages => this.onSend(messages)}
           renderActions={this.renderCustomActions}
           renderCustomView={this.renderCustomView}

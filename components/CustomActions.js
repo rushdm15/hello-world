@@ -8,8 +8,8 @@ import * as Location from 'expo-location';
 import firebase from 'firebase';
 
 export default class CustomActions extends React.Component {
-  state = {
-    image: null,
+  constructor() {
+    super();
   }
   
   //Pick an image from the library

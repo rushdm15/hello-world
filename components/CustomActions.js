@@ -32,7 +32,7 @@ export default class CustomActions extends React.Component {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL, CAMERA);
     if(status === 'granted') {
       let result = await ImagePicker.launchCameraAsync({
-        mediaTypes: 'Images',
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
       }).catch(error => console.log(error));
 
       if (!result.cancelled) {
@@ -48,6 +48,9 @@ export default class CustomActions extends React.Component {
     if(status === 'granted') {
       let result = await Location.getCurrentPositionAsync({});
  
+      const longitude = JSON.stringify(result.coords.longitude);
+      const latitude = JSON.stringify(result.coords.latitude);
+
       if (result) {
         this.props.onSend({
           location: {

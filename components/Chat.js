@@ -126,7 +126,7 @@ export default class Chat extends React.Component {
       // the append function by Gifted chat appends the new message to the message obj.
       messages: GiftedChat.append(previousState.messages, messages),
     }), () => {
-      this.addMessages();
+      this.addMessage();
       this.saveMessages();
     });
   }
@@ -153,7 +153,7 @@ export default class Chat extends React.Component {
   }
 
   // add a new list to the collection
-  addMessages = () => {
+  addMessage = () => {
     const message = this.state.messages[0];
     this.referenceChatMessages.add({
       _id: message._id,

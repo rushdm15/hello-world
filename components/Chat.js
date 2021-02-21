@@ -101,11 +101,12 @@ export default class Chat extends React.Component {
       }
     });
   } else {
-    console.log('offline');
-    this.getMessages();
-    this.setState({
-      isConnected: false,
-      });
+      console.log('offline');
+      this.getMessages();
+      this.setState({ isConnected: false });
+      Alert.alert(
+        'No internet connection detected | Unable to send messages'
+      );
      }
     });
     // calling the onSnapshot function to receive the updated data

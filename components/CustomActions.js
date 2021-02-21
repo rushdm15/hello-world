@@ -21,11 +21,9 @@ export default class CustomActions extends React.Component {
       }).catch(error => console.log(error));
  
       if (!result.cancelled) {
-        this.setState({
-          image: result
-        });  
+        const imageUrl = await this.uploadImageFetch(result.uri);
+        this.props.onSend({ image: imageUrl, text: "" });
       }
- 
     }
   }
 
@@ -38,11 +36,9 @@ export default class CustomActions extends React.Component {
       }).catch(error => console.log(error));
 
       if (!result.cancelled) {
-        this.setState({
-          image: result
-        });  
+        const imageUrl = await this.uploadImageFetch(result.uri);
+        this.props.onSend({ image: imageUrl, text: "" });
       }
-
     }
   }
 
@@ -53,8 +49,12 @@ export default class CustomActions extends React.Component {
       let result = await Location.getCurrentPositionAsync({});
  
       if (result) {
-        this.setState({
-          location: result
+        this.props.onSend({
+          location: {
+            longitude: longitude,
+            latitude: latitude,
+          },
+          text: ""
         });
       }
     }

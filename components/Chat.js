@@ -141,7 +141,13 @@ export default class Chat extends React.Component {
         _id: data._id,
         text: data.text,
         createdAt: data.createdAt.toDate(),
-        user: data.user,
+        user: {
+          _id: data.user._id,
+          name: data.user.name,
+          avatar: data.user.avatar,
+        },
+        image: data.image || '',
+        location: data.location || null,
       });
     });
   }
@@ -236,7 +242,9 @@ renderInputToolbar(props) {
           renderActions={this.renderCustomActions}
           renderCustomView={this.renderCustomView}
           user={{
-            _id: 1,
+            _id: this.state.uid,
+            avatar: 'https://placeimg.com/140/140/any',
+            name: name,
           }}
         /> 
         {/* android keyboard error */}

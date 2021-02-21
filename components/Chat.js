@@ -95,7 +95,7 @@ export default class Chat extends React.Component {
       messages: [],
       }); 
       // listen for collection changes for current user 
-      this.unsubscribe = this.referenceChatMessages
+      this.unsubscribeChatUser = this.referenceChatMessages
         .orderBy("createdAt", "desc")
         .onSnapshot(this.onCollectionUpdate);
       }
@@ -114,7 +114,7 @@ export default class Chat extends React.Component {
 
   componentWillUnmount() {
     // Stop listening to authentication
-    this.unsubscribe();
+    this.unsubscribeChatUser();
     // Stop receiving updates from collection
     this.authUnsubscribe();
   }

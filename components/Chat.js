@@ -150,6 +150,7 @@ export default class Chat extends React.Component {
         location: data.location || null,
       });
     });
+    this.setState({ messages });
   }
 
   // add a new list to the collection

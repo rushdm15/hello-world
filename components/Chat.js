@@ -18,6 +18,11 @@ export default class Chat extends React.Component {
     super();
     this.state = {
       messages: [],
+      user: {
+        _id: '',
+        name: '',
+        avatar: ''
+      },
       uid: 0,
       isConnected: false,
       image: null

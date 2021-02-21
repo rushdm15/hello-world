@@ -14,10 +14,10 @@ export default class CustomActions extends React.Component {
   
   //Pick an image from the library
   pickImage = async () => {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
     if(status === 'granted') {
       let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: 'Images',
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
       }).catch(error => console.log(error));
  
       if (!result.cancelled) {
@@ -29,7 +29,7 @@ export default class CustomActions extends React.Component {
 
   // Take a photo
   takePhoto = async () => {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL, CAMERA);
+    const { status } = await Permissions.askAsync(Permissions.CAMERA, Permissions.MEDIA_LIBRARY);
     if(status === 'granted') {
       let result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,

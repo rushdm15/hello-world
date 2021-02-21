@@ -240,6 +240,7 @@ renderInputToolbar(props) {
           onSend={messages => this.onSend(messages)}
           renderActions={this.renderCustomActions}
           renderCustomView={this.renderCustomView}
+          image={this.state.image}
           user={{
             _id: this.state.uid,
             avatar: 'https://placeimg.com/140/140/any',

@@ -76,6 +76,7 @@ export default class Chat extends React.Component {
   }
 
   componentDidMount() {
+    // Check user connection
     NetInfo.fetch().then(connection => {
       if (connection.isConnected) {
         console.log('online');
@@ -84,6 +85,7 @@ export default class Chat extends React.Component {
       if (!user) {
         firebase.auth().signInAnonymously();
       }
+      //Add user to state
       else {
         this.setState({
         isConnected: true,

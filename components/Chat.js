@@ -226,10 +226,8 @@ renderInputToolbar(props) {
   
 // Shows username in navigator, along with color chosen
   render() {
-    let name = this.props.route.params.name; // OR ...
-    // let { name } = this.props.route.params;
-    let color = this.props.route.params.color;
-    this.props.navigation.setOptions({ title: name });
+    const { name, color } = this.props.route.params;
+    const { messages } = this.state;
 
     // Styling and background color chosen, uses flexbox
     return (

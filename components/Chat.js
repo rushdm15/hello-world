@@ -8,10 +8,6 @@ import NetInfo from '@react-native-community/netinfo';
 import MapView from 'react-native-maps';
 import CustomActions from './CustomActions';
 
-// Google Firebase
-// const firebase = require('firebase');
-// require('firebase/firestore');
-
 // Chat component also exported
 export default class Chat extends React.Component {
   constructor() {
@@ -45,8 +41,6 @@ export default class Chat extends React.Component {
 
     // create a reference to the active user's documents (shopping lists)
     this.referenceChatMessages = firebase.firestore().collection('messages');
-    // .where("uid", "==", this.state.uid);
-
   } 
 
   async getMessages() {

@@ -1,5 +1,8 @@
 # hello-world (React Native App)
 
+[pic.png](https://github.com/rushdm15/hello-world/blob/master/pic.png?raw=true)
+[pic2.png](https://github.com/rushdm15/hello-world/blob/master/pic2.png?raw=true)
+
 ### Description
 A chat app for mobile devices using React Native. The app will provide users with a chat interface and options to share images and their location.  Built using React Native, a framework for building Android and iOS apps that only requires one codebase, as well as using Expo and Google Firestore.
 
